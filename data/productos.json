@@ -1,0 +1,110 @@
+[
+  {
+    "id": "jug-001",
+    "nombre": "Auto de colección",
+    "categoria": "jugueteria",
+    "descripcion": "Auto de metal a escala, ideal para coleccionistas y niños mayores de 3 años.",
+    "imagen": "https://images.unsplash.com/photo-1594787318286-3d835c1d207f?w=400&q=80",
+    "destacado": true,
+    "disponible": true
+  },
+  {
+    "id": "jug-002",
+    "nombre": "Set de bloques de construcción",
+    "categoria": "jugueteria",
+    "descripcion": "100 piezas de colores, estimula la creatividad y el desarrollo motor.",
+    "imagen": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&q=80",
+    "destacado": true,
+    "disponible": true
+  },
+  {
+    "id": "baz-001",
+    "nombre": "Juego de tazas",
+    "categoria": "bazar",
+    "descripcion": "Set de 6 tazas de cerámica con diseños modernos.",
+    "imagen": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&q=80",
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "baz-002",
+    "nombre": "Porta especias",
+    "categoria": "bazar",
+    "descripcion": "Set organizador de especias con 12 frascos de vidrio.",
+    "imagen": "https://images.unsplash.com/photo-1506368083636-6defb67639ab?w=400&q=80",
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "reg-001",
+    "nombre": "Caja regalo sorpresa",
+    "categoria": "regaleria",
+    "descripcion": "Caja decorada lista para regalar, incluye papel de seda y moño.",
+    "imagen": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&q=80",
+    "destacado": true,
+    "disponible": true
+  },
+  {
+    "id": "reg-002",
+    "nombre": "Marco de fotos familiar",
+    "categoria": "regaleria",
+    "descripcion": "Marco de madera para 3 fotos, ideal para regalo.",
+    "imagen": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400&q=80",
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "bij-001",
+    "nombre": "Aros dorados minimalistas",
+    "categoria": "bijouterie",
+    "descripcion": "Aros de argolla bañados en oro, estilo minimalista y elegante.",
+    "imagen": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80",
+    "destacado": true,
+    "disponible": true
+  },
+  {
+    "id": "bij-002",
+    "nombre": "Collar de perlas",
+    "categoria": "bijouterie",
+    "descripcion": "Collar de perlas sintéticas, cadena de 45cm ajustable.",
+    "imagen": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80",
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "cot-001",
+    "nombre": "Kit cumpleaños",
+    "categoria": "cotillon",
+    "descripcion": "50 piezas: globos, serpentinas, sombreros y matasuegras.",
+    "imagen": "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&q=80",
+    "destacado": true,
+    "disponible": true
+  },
+  {
+    "id": "cot-002",
+    "nombre": "Globos metalizados",
+    "categoria": "cotillon",
+    "descripcion": "Pack de 10 globos metalizados de colores variados.",
+    "imagen": "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=400&q=80",
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "tec-001",
+    "nombre": "Auriculares inalámbricos",
+    "categoria": "tecnologia",
+    "descripcion": "Auriculares Bluetooth con cancelación de ruido y 20hs de batería.",
+    "imagen": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80",
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "tec-002",
+    "nombre": "Cargador portátil",
+    "categoria": "tecnologia",
+    "descripcion": "Power bank 10000mAh con carga rápida, 2 puertos USB.",
+    "imagen": "https://images.unsplash.com/photo-1609592424705-a0b3e5f6ec3f?w=400&q=80",
+    "destacado": false,
+    "disponible": true
+  }
+]

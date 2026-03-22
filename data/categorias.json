@@ -1,0 +1,50 @@
+[
+  {
+    "id": "jugueteria",
+    "nombre": "Juguetería",
+    "descripcion": "Juguetes para todas las edades",
+    "emoji": "🧸",
+    "color": "bg-yellow-50 border-yellow-200",
+    "imagen": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
+  },
+  {
+    "id": "bazar",
+    "nombre": "Bazar",
+    "descripcion": "Artículos para el hogar",
+    "emoji": "🏠",
+    "color": "bg-blue-50 border-blue-200",
+    "imagen": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80"
+  },
+  {
+    "id": "regaleria",
+    "nombre": "Regalería",
+    "descripcion": "El regalo perfecto para cada ocasión",
+    "emoji": "🎁",
+    "color": "bg-pink-50 border-pink-200",
+    "imagen": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&q=80"
+  },
+  {
+    "id": "cotillon",
+    "nombre": "Cotillón",
+    "descripcion": "Todo para tus fiestas y eventos",
+    "emoji": "🎉",
+    "color": "bg-orange-50 border-orange-200",
+    "imagen": "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80"
+  },
+  {
+    "id": "tecnologia",
+    "nombre": "Tecnología",
+    "descripcion": "Accesorios y gadgets",
+    "emoji": "💻",
+    "color": "bg-slate-50 border-slate-200",
+    "imagen": "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600&q=80"
+  },
+  {
+    "id": "bijouterie",
+    "nombre": "Bijouterie",
+    "descripcion": "Accesorios y joyería de moda",
+    "emoji": "💍",
+    "color": "bg-purple-50 border-purple-200",
+    "imagen": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80"
+  }
+]
