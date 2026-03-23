@@ -31,6 +31,7 @@ export default function Navbar() {
             ? "bg-white shadow-[0_1px_20px_rgba(0,0,0,0.08)]"
             : "bg-transparent"
         }`}
+        style={{ backdropFilter: scrolled ? "none" : "none" }}
       >
         {/* Barra superior amarilla — solo visible al hacer scroll */}
         <div
@@ -52,7 +53,7 @@ export default function Navbar() {
                 className="object-contain scale-90"
               />
             </div>
-            <span className={`font-black text-base tracking-tight transition-colors group-hover:text-[#1a4bc4] ${scrolled ? "text-neutral-900" : "text-neutral-900"}`}>
+            <span className={`font-black text-base tracking-tight transition-colors ${scrolled ? "text-neutral-900 group-hover:text-[#1a4bc4]" : "text-white group-hover:text-white/80"}`}>
               Mundo Manía
             </span>
           </Link>
@@ -66,7 +67,7 @@ export default function Navbar() {
                 className={`relative text-sm transition-colors px-3 py-2 rounded-lg group ${
                 scrolled
                   ? "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100"
-                  : "text-neutral-600 hover:text-neutral-900 hover:bg-white/50"
+                  : "text-white/80 hover:text-white hover:bg-white/10"
               }`}
               >
                 {link.label}
@@ -80,7 +81,7 @@ export default function Navbar() {
               href={`https://wa.me/${CONFIG.whatsappNumero}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-bold bg-[#1a4bc4] hover:bg-[#1640a8] text-white px-5 py-2 rounded-full transition-all hover:shadow-lg hover:shadow-[#1a4bc4]/25 hover:-translate-y-0.5"
+              className={`text-sm font-bold px-5 py-2 rounded-full transition-all hover:-translate-y-0.5 ${scrolled ? "bg-[#1a4bc4] hover:bg-[#1640a8] text-white hover:shadow-lg hover:shadow-[#1a4bc4]/25" : "bg-white text-[#1a4bc4] hover:bg-white/90"}`}
             >
               WhatsApp
             </a>
