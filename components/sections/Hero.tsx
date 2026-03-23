@@ -2,12 +2,13 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { MapPin, MessageCircle, ArrowRight } from "lucide-react"
 import { CONFIG } from "@/lib/config"
+import { useState, useEffect } from "react"
 
-// Fotos reales de productos del local
-const marqueeImages = [
+// Pool de fotos reales del local — se rotan en el mosaico
+const poolImagenes = [
   "/images/productos/fb_22.jpg",
   "/images/productos/fb_27.jpg",
   "/images/productos/fb_42.jpg",
@@ -23,17 +24,58 @@ const marqueeImages = [
   "/images/productos/fb_120.jpg",
   "/images/productos/fb_128.jpg",
   "/images/productos/fb_086.jpg",
+  "/images/productos/fb_076.jpg",
+  "/images/productos/fb_079.jpg",
+  "/images/productos/fb_096.jpg",
+  "/images/productos/fb_093.jpg",
+  "/images/productos/fb_115.jpg",
+  "/images/productos/fb_101.jpg",
+  "/images/productos/fb_067.jpg",
+  "/images/productos/fb_069.jpg",
+  "/images/productos/fb_084.jpg",
+  "/images/productos/ig_06.jpg",
 ]
 
+// Marquee usa las mismas imágenes
+const marqueeImages = poolImagenes
+
 const categorias = ["Juguetería", "Bazar", "Regalería", "Cotillón", "Escolar", "Bijouterie", "Herramientas"]
+
+// Cada slot del mosaico rota de forma independiente con distinto delay
+const SLOTS = 5
+const INTERVAL = 2800 // ms entre cambios de imagen
+
+function shuffle<T>(arr: T[]): T[] {
+  return [...arr].sort(() => Math.random() - 0.5)
+}
 
 export default function Hero() {
   const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumero}?text=${encodeURIComponent(CONFIG.whatsappMensaje)}`
 
+  // Cada slot mantiene su propio índice en el pool
+  const [indices, setIndices] = useState<number[]>(() =>
+    Array.from({ length: SLOTS }, (_, i) => i % poolImagenes.length)
+  )
+
+  useEffect(() => {
+    // Cada slot cambia en intervalos ligeramente distintos para que no se vean iguales
+    const timers = Array.from({ length: SLOTS }, (_, slot) =>
+      setInterval(() => {
+        setIndices((prev) => {
+          const next = [...prev]
+          // Avanzar al siguiente índice sin repetir la imagen actual del slot
+          next[slot] = (next[slot] + SLOTS + 1) % poolImagenes.length
+          return next
+        })
+      }, INTERVAL + slot * 600)
+    )
+    return () => timers.forEach(clearInterval)
+  }, [])
+
   return (
     <section className="relative bg-[#1a4bc4] overflow-hidden min-h-screen flex flex-col">
 
-      {/* Fondo con patrón sutil */}
+      {/* Patrón de puntos sutil */}
       <div className="absolute inset-0 opacity-[0.04]" style={{
         backgroundImage: `radial-gradient(circle, white 1px, transparent 1px)`,
         backgroundSize: "32px 32px"
@@ -44,7 +86,7 @@ export default function Hero() {
         <div className="max-w-7xl mx-auto px-6 w-full pt-24 pb-12">
           <div className="grid md:grid-cols-2 gap-10 items-center">
 
-            {/* Texto */}
+            {/* ── Texto ── */}
             <div className="space-y-8">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
@@ -126,54 +168,51 @@ export default function Hero() {
               </motion.div>
             </div>
 
-            {/* Mosaico de productos */}
+            {/* ── Mosaico rotativo ── */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.15 }}
               className="hidden md:grid grid-cols-3 gap-3 h-[480px]"
             >
-              {[
-                { img: "/images/productos/fb_42.jpg", tall: true, row: "row-span-2" },
-                { img: "/images/productos/fb_22.jpg", tall: false, row: "" },
-                { img: "/images/productos/ig_01.jpg", tall: false, row: "" },
-                { img: "/images/productos/fb_45.jpg", tall: false, row: "" },
-                { img: "/images/productos/fb_104.jpg", tall: false, row: "" },
-              ].map(({ img, row }, i) => (
-                <motion.div
-                  key={img}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
-                  className={`relative rounded-2xl overflow-hidden bg-white/10 ${row} ${i === 0 ? "row-span-2" : ""}`}
+              {indices.map((imgIdx, slot) => (
+                <div
+                  key={slot}
+                  className={`relative rounded-2xl overflow-hidden bg-white/10 ${slot === 0 ? "row-span-2" : ""}`}
                 >
-                  <Image
-                    src={img}
-                    alt="Producto"
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-700"
-                    sizes="20vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </motion.div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={imgIdx}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.8, ease: "easeInOut" }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={poolImagenes[imgIdx]}
+                        alt="Producto"
+                        fill
+                        className="object-cover"
+                        sizes="20vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               ))}
             </motion.div>
+
           </div>
         </div>
       </div>
 
-      {/* Banda inferior: marquee infinito de productos */}
+      {/* ── Marquee inferior ── */}
       <div className="relative border-t border-white/10 py-4 overflow-hidden bg-black/20">
         <div className="flex gap-3 animate-marquee w-max">
           {[...marqueeImages, ...marqueeImages].map((src, i) => (
             <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
-              <Image
-                src={src}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
+              <Image src={src} alt="" fill className="object-cover" sizes="80px" />
             </div>
           ))}
         </div>
