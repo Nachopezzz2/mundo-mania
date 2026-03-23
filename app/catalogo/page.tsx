@@ -29,7 +29,7 @@ export default function CatalogoPage() {
         .eq("disponible", true)
         .order("created_at", { ascending: false })
 
-      if (error || !data || data.length === 0) {
+      if (error || !data || data.length < 5) {
         setProductos(productosJson.filter((p) => p.disponible) as Producto[])
       } else {
         setProductos(data)

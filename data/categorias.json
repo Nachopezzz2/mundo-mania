@@ -8,6 +8,22 @@
     "imagen": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
   },
   {
+    "id": "cotillon",
+    "nombre": "Cotillón",
+    "descripcion": "Todo para tus fiestas y eventos",
+    "emoji": "🎉",
+    "color": "bg-orange-50 border-orange-200",
+    "imagen": "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80"
+  },
+  {
+    "id": "herramientas",
+    "nombre": "Herramientas",
+    "descripcion": "Ferretería y herramientas del hogar",
+    "emoji": "🔧",
+    "color": "bg-zinc-50 border-zinc-200",
+    "imagen": "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&q=80"
+  },
+  {
     "id": "bazar",
     "nombre": "Bazar",
     "descripcion": "Artículos para el hogar",
@@ -24,20 +40,12 @@
     "imagen": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&q=80"
   },
   {
-    "id": "cotillon",
-    "nombre": "Cotillón",
-    "descripcion": "Todo para tus fiestas y eventos",
-    "emoji": "🎉",
-    "color": "bg-orange-50 border-orange-200",
-    "imagen": "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80"
-  },
-  {
-    "id": "tecnologia",
-    "nombre": "Tecnología",
-    "descripcion": "Accesorios y gadgets",
-    "emoji": "💻",
-    "color": "bg-slate-50 border-slate-200",
-    "imagen": "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600&q=80"
+    "id": "escolar",
+    "nombre": "Escolar",
+    "descripcion": "Útiles y material escolar",
+    "emoji": "📚",
+    "color": "bg-green-50 border-green-200",
+    "imagen": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80"
   },
   {
     "id": "bijouterie",
@@ -46,5 +54,13 @@
     "emoji": "💍",
     "color": "bg-purple-50 border-purple-200",
     "imagen": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80"
+  },
+  {
+    "id": "otros",
+    "nombre": "Otros",
+    "descripcion": "Más productos variados",
+    "emoji": "✨",
+    "color": "bg-neutral-50 border-neutral-200",
+    "imagen": "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600&q=80"
   }
 ]

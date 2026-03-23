@@ -1,9 +1,7 @@
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
 import "./globals.css"
-import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
-import WhatsAppButton from "@/components/WhatsAppButton"
+import SiteLayout from "@/components/SiteLayout"
 import { CONFIG } from "@/lib/config"
 
 const geist = Geist({
@@ -36,10 +34,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={geist.className}>
       <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <SiteLayout>{children}</SiteLayout>
       </body>
     </html>
   )

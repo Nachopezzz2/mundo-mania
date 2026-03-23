@@ -38,7 +38,9 @@ export default function AdminPage() {
   const [editId, setEditId] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -76,21 +78,28 @@ export default function AdminPage() {
   function openNew() {
     setForm(emptyForm)
     setEditId(null)
+    setSaveError(null)
+    setUploadError(null)
     setShowForm(true)
   }
 
   function openEdit(p: Producto) {
     setForm({ nombre: p.nombre, descripcion: p.descripcion, categoria: p.categoria, imagen: p.imagen, destacado: p.destacado, disponible: p.disponible })
     setEditId(p.id)
+    setSaveError(null)
+    setUploadError(null)
     setShowForm(true)
   }
 
   async function uploadImage(file: File) {
     setUploading(true)
+    setUploadError(null)
     const ext = file.name.split(".").pop()
     const filename = `${Date.now()}.${ext}`
     const { error } = await supabase.storage.from("productos").upload(filename, file)
-    if (!error) {
+    if (error) {
+      setUploadError("No se pudo subir la imagen. Intentá de nuevo.")
+    } else {
       const { data } = supabase.storage.from("productos").getPublicUrl(filename)
       setForm((f) => ({ ...f, imagen: data.publicUrl }))
     }
@@ -100,12 +109,18 @@ export default function AdminPage() {
   async function save() {
     if (!form.nombre.trim()) return
     setSaving(true)
+    setSaveError(null)
+    let error
     if (editId) {
-      await supabase.from("productos").update(form).eq("id", editId)
+      ;({ error } = await supabase.from("productos").update(form).eq("id", editId))
     } else {
-      await supabase.from("productos").insert(form)
+      ;({ error } = await supabase.from("productos").insert(form))
     }
     setSaving(false)
+    if (error) {
+      setSaveError("No se pudo guardar el producto. Verificá la conexión e intentá de nuevo.")
+      return
+    }
     setShowForm(false)
     fetchProductos()
   }
@@ -245,7 +260,7 @@ export default function AdminPage() {
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-100 sticky top-0 bg-white">
               <h2 className="font-black text-neutral-900">{editId ? "Editar producto" : "Nuevo producto"}</h2>
-              <button onClick={() => setShowForm(false)} className="p-1 text-neutral-400 hover:text-neutral-700">
+              <button onClick={() => { setShowForm(false); setSaveError(null) }} className="p-1 text-neutral-400 hover:text-neutral-700">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -288,6 +303,9 @@ export default function AdminPage() {
                   >
                     Quitar foto
                   </button>
+                )}
+                {uploadError && (
+                  <p className="mt-2 text-xs text-red-500">{uploadError}</p>
                 )}
               </div>
 
@@ -349,10 +367,15 @@ export default function AdminPage() {
                 ))}
               </div>
 
+              {/* Error al guardar */}
+              {saveError && (
+                <p className="text-xs text-red-500 bg-red-50 border border-red-200 rounded-xl px-4 py-3">{saveError}</p>
+              )}
+
               {/* Guardar */}
               <button
                 onClick={save}
-                disabled={saving || !form.nombre.trim()}
+                disabled={saving || uploading || !form.nombre.trim()}
                 className="w-full bg-[#1a4bc4] hover:bg-[#1640a8] disabled:opacity-50 text-white font-bold py-3.5 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
               >
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
