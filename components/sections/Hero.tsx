@@ -2,12 +2,10 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { MapPin, MessageCircle, ArrowRight } from "lucide-react"
 import { CONFIG } from "@/lib/config"
-import { useState, useEffect } from "react"
 
-// Pool de fotos reales del local — se rotan en el mosaico
 const poolImagenes = [
   "/images/productos/fb_22.jpg",
   "/images/productos/fb_27.jpg",
@@ -36,182 +34,196 @@ const poolImagenes = [
   "/images/productos/ig_06.jpg",
 ]
 
-// Marquee usa las mismas imágenes
-const marqueeImages = poolImagenes
+// Scattered photo cards — positioned as % within the full-width hero
+// Each photo is placed so they surround the centered text block
+const scatteredPhotos = [
+  // Far left column
+  { src: poolImagenes[0],  x: "2%",   y: "12%",  w: 160, h: 195, r: -7,  delay: 0.20 },
+  { src: poolImagenes[11], x: "2%",   y: "56%",  w: 145, h: 165, r:  5,  delay: 0.35 },
+  // Near left
+  { src: poolImagenes[5],  x: "17%",  y: "5%",   w: 130, h: 140, r:  4,  delay: 0.28 },
+  { src: poolImagenes[8],  x: "16%",  y: "62%",  w: 140, h: 155, r: -5,  delay: 0.40 },
+  // Near right
+  { src: poolImagenes[2],  x: "71%",  y: "4%",   w: 135, h: 145, r: -4,  delay: 0.32 },
+  { src: poolImagenes[9],  x: "72%",  y: "60%",  w: 140, h: 160, r:  6,  delay: 0.44 },
+  // Far right column
+  { src: poolImagenes[4],  x: "86%",  y: "10%",  w: 155, h: 185, r:  5,  delay: 0.22 },
+  { src: poolImagenes[7],  x: "86%",  y: "57%",  w: 145, h: 155, r: -6,  delay: 0.38 },
+]
 
 const categorias = ["Juguetería", "Bazar", "Regalería", "Cotillón", "Escolar", "Bijouterie", "Herramientas"]
-
-// Cada slot del mosaico rota de forma independiente con distinto delay
-const SLOTS = 5
-const INTERVAL = 2800 // ms entre cambios de imagen
-
-function shuffle<T>(arr: T[]): T[] {
-  return [...arr].sort(() => Math.random() - 0.5)
-}
 
 export default function Hero() {
   const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumero}?text=${encodeURIComponent(CONFIG.whatsappMensaje)}`
 
-  // Cada slot mantiene su propio índice en el pool
-  const [indices, setIndices] = useState<number[]>(() =>
-    Array.from({ length: SLOTS }, (_, i) => i % poolImagenes.length)
-  )
-
-  useEffect(() => {
-    // Cada slot cambia en intervalos ligeramente distintos para que no se vean iguales
-    const timers = Array.from({ length: SLOTS }, (_, slot) =>
-      setInterval(() => {
-        setIndices((prev) => {
-          const next = [...prev]
-          // Avanzar al siguiente índice sin repetir la imagen actual del slot
-          next[slot] = (next[slot] + SLOTS + 1) % poolImagenes.length
-          return next
-        })
-      }, INTERVAL + slot * 600)
-    )
-    return () => timers.forEach(clearInterval)
-  }, [])
-
   return (
-    <section className="relative bg-[#1a4bc4] overflow-hidden min-h-screen flex flex-col">
+    <section className="relative bg-[#1a4bc4] overflow-hidden min-h-screen flex flex-col select-none">
 
-      {/* Patrón de puntos sutil */}
-      <div className="absolute inset-0 opacity-[0.04]" style={{
-        backgroundImage: `radial-gradient(circle, white 1px, transparent 1px)`,
-        backgroundSize: "32px 32px"
-      }} />
+      {/* Subtle dot grid */}
+      <div
+        className="absolute inset-0 opacity-[0.045] pointer-events-none"
+        style={{ backgroundImage: `radial-gradient(circle, white 1px, transparent 1px)`, backgroundSize: "30px 30px" }}
+      />
 
-      {/* Contenido principal */}
+      {/* Warm glow — top right */}
+      <div className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full bg-[#f5c800]/15 blur-[140px] pointer-events-none" />
+      {/* Cool shadow — bottom left */}
+      <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-[#0a1e60]/70 blur-[100px] pointer-events-none" />
+
+      {/* ── Main content ── */}
       <div className="relative flex-1 flex items-center">
-        <div className="max-w-7xl mx-auto px-6 w-full pt-24 pb-12">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
+        <div className="w-full max-w-7xl mx-auto px-4 pt-24 pb-10">
 
-            {/* ── Texto ── */}
-            <div className="space-y-8">
+          {/* Scattered photos — large desktop only */}
+          <div className="hidden xl:block pointer-events-none absolute inset-x-4 inset-y-0 z-0">
+            {scatteredPhotos.map((p, i) => (
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                key={i}
+                initial={{ opacity: 0, scale: 0.75, rotate: p.r - 8 }}
+                animate={{ opacity: 1, scale: 1, rotate: p.r }}
+                transition={{ duration: 0.75, delay: p.delay, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  position: "absolute",
+                  left: p.x,
+                  top: p.y,
+                  width: p.w,
+                  height: p.h,
+                  pointerEvents: "auto",
+                }}
+                whileHover={{ scale: 1.07, rotate: 0, zIndex: 30, transition: { duration: 0.2 } }}
+                className="rounded-2xl overflow-hidden shadow-2xl shadow-black/50 cursor-pointer"
               >
-                <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 text-white/90 text-xs font-medium mb-8 border border-white/20">
-                  <MapPin className="w-3.5 h-3.5" />
-                  Uruguay 373, Carmelo
-                </div>
-
-                <h1 className="text-6xl md:text-7xl lg:text-[88px] font-black tracking-tighter text-white leading-[0.88] mb-6">
-                  Mundo<br />
-                  <span className="text-[#f5c800]">Manía</span>
-                </h1>
-
-                <p className="text-white/70 text-lg leading-relaxed max-w-xs">
-                  Tu comercio de confianza en Carmelo.<br />
-                  Todo lo que necesitás, en un solo lugar.
-                </p>
+                <Image src={p.src} alt="" fill className="object-cover" sizes="180px" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
               </motion.div>
+            ))}
+          </div>
 
-              {/* Pills de categorías */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="flex flex-wrap gap-2"
-              >
-                {categorias.map((cat) => (
-                  <span key={cat} className="bg-white/10 border border-white/20 text-white/80 text-xs px-3 py-1.5 rounded-full">
-                    {cat}
-                  </span>
-                ))}
-              </motion.div>
+          {/* Center column — padded so it doesn't clash with photos on xl */}
+          <div className="relative z-10 text-center xl:px-56 2xl:px-64">
 
-              {/* CTAs */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="flex flex-wrap gap-3"
-              >
-                <Link
-                  href="/catalogo"
-                  className="inline-flex items-center gap-2 bg-[#f5c800] hover:bg-[#e6b800] text-neutral-900 font-bold px-7 py-3.5 rounded-full transition-all text-sm shadow-xl shadow-black/20 hover:-translate-y-0.5"
-                >
-                  Ver catálogo
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-medium px-7 py-3.5 rounded-full transition-all text-sm"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  WhatsApp
-                </a>
-              </motion.div>
-
-              {/* Stats */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.7, delay: 0.45 }}
-                className="flex gap-8 pt-2"
-              >
-                {[
-                  { val: "5.6K", label: "seguidores FB" },
-                  { val: "3.2K", label: "seguidores IG" },
-                  { val: "+8", label: "categorías" },
-                ].map(({ val, label }) => (
-                  <div key={label}>
-                    <p className="text-2xl font-black text-white">{val}</p>
-                    <p className="text-xs text-white/50 mt-0.5">{label}</p>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* ── Mosaico rotativo ── */}
+            {/* Location badge */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.15 }}
-              className="hidden md:grid grid-cols-3 gap-3 h-[480px]"
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 text-white/90 text-xs font-medium mb-6 border border-white/20"
             >
-              {indices.map((imgIdx, slot) => (
-                <div
-                  key={slot}
-                  className={`relative rounded-2xl overflow-hidden bg-white/10 ${slot === 0 ? "row-span-2" : ""}`}
-                >
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={imgIdx}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.8, ease: "easeInOut" }}
-                      className="absolute inset-0"
-                    >
-                      <Image
-                        src={poolImagenes[imgIdx]}
-                        alt="Producto"
-                        fill
-                        className="object-cover"
-                        sizes="20vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
+              <MapPin className="w-3 h-3 text-[#f5c800]" />
+              Uruguay 373, Carmelo
+            </motion.div>
+
+            {/* Giant wordmark */}
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="font-black leading-none tracking-tighter mb-5"
+            >
+              <span className="block text-[clamp(4.5rem,12vw,130px)] text-[#f5c800] drop-shadow-[0_4px_24px_rgba(245,200,0,0.3)]">
+                MUNDO
+              </span>
+              <span className="block text-[clamp(4.5rem,12vw,130px)] text-white -mt-3">
+                MANÍA
+              </span>
+            </motion.h1>
+
+            {/* Tagline */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="text-white/60 text-base md:text-lg leading-relaxed mb-7 max-w-xs mx-auto"
+            >
+              Tu comercio de confianza en Carmelo.
+              <br />Todo lo que necesitás, en un solo lugar.
+            </motion.p>
+
+            {/* Category pills */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.42 }}
+              className="flex flex-wrap justify-center gap-2 mb-7"
+            >
+              {categorias.map((cat) => (
+                <span key={cat} className="bg-white/10 border border-white/20 text-white/70 text-xs px-3 py-1.5 rounded-full">
+                  {cat}
+                </span>
               ))}
             </motion.div>
 
+            {/* CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.52 }}
+              className="flex flex-wrap justify-center gap-3 mb-8"
+            >
+              <Link
+                href="/catalogo"
+                className="inline-flex items-center gap-2 bg-[#f5c800] hover:bg-[#e6b800] text-neutral-900 font-bold px-8 py-3.5 rounded-full transition-all text-sm shadow-xl shadow-black/20 hover:-translate-y-0.5 active:scale-95"
+              >
+                Ver catálogo
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-medium px-8 py-3.5 rounded-full transition-all text-sm active:scale-95"
+              >
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </a>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.65 }}
+              className="flex justify-center gap-10"
+            >
+              {[
+                { val: "5.6K", label: "seguidores FB" },
+                { val: "3.2K", label: "seguidores IG" },
+                { val: "+8",   label: "categorías"   },
+              ].map(({ val, label }) => (
+                <div key={label} className="text-center">
+                  <p className="text-2xl font-black text-white">{val}</p>
+                  <p className="text-xs text-white/40 mt-0.5">{label}</p>
+                </div>
+              ))}
+            </motion.div>
           </div>
+
+          {/* Mobile photo collage — shows below text on smaller screens */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="xl:hidden grid grid-cols-4 gap-2 mt-10"
+          >
+            {poolImagenes.slice(0, 8).map((src, i) => (
+              <motion.div
+                key={i}
+                style={{ rotate: i % 2 === 0 ? -3 : 3 }}
+                className={`relative rounded-xl overflow-hidden shadow-lg shadow-black/30 ${i % 3 === 0 ? "h-28" : "h-20"}`}
+              >
+                <Image src={src} alt="" fill className="object-cover" sizes="25vw" />
+              </motion.div>
+            ))}
+          </motion.div>
+
         </div>
       </div>
 
-      {/* ── Marquee inferior ── */}
-      <div className="relative border-t border-white/10 py-4 overflow-hidden bg-black/20">
+      {/* ── Marquee strip ── */}
+      <div className="relative border-t border-white/10 py-3.5 overflow-hidden bg-black/20">
         <div className="flex gap-3 animate-marquee w-max">
-          {[...marqueeImages, ...marqueeImages].map((src, i) => (
-            <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+          {[...poolImagenes, ...poolImagenes].map((src, i) => (
+            <div key={i} className="relative w-[72px] h-[72px] rounded-xl overflow-hidden flex-shrink-0">
               <Image src={src} alt="" fill className="object-cover" sizes="80px" />
             </div>
           ))}
