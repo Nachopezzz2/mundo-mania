@@ -16,7 +16,7 @@ export default function SobreNosotros() {
             transition={{ duration: 0.7 }}
             className="space-y-6"
           >
-            <p className="text-xs text-neutral-400 tracking-widest uppercase">Quiénes somos</p>
+            <p className="text-xs text-amber-600 tracking-widest uppercase font-semibold">Quiénes somos</p>
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900 leading-tight">
               Un negocio de familia,<br />
               <span className="text-[#1a4bc4]">para toda la familia.</span>
@@ -53,7 +53,7 @@ export default function SobreNosotros() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="p-6 rounded-2xl border border-neutral-100 bg-neutral-50"
+                className="p-6 rounded-2xl border border-blue-100 bg-blue-50/60"
               >
                 <p className="text-4xl font-black text-neutral-900 tracking-tighter">{valor}</p>
                 <p className="text-neutral-400 text-xs mt-2 leading-relaxed whitespace-pre-line">{label}</p>

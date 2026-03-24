@@ -8,8 +8,11 @@ export default function Contacto() {
   const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumero}?text=${encodeURIComponent(CONFIG.whatsappMensaje)}`
 
   return (
-    <section id="contacto" className="py-24 md:py-36 bg-neutral-900 text-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="contacto" className="py-24 md:py-36 bg-[#0f2463] text-white relative overflow-hidden">
+      {/* Subtle glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#1a4bc4]/40 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute bottom-0 left-1/3 w-[300px] h-[300px] bg-[#f5c800]/10 rounded-full blur-[80px] pointer-events-none" />
+      <div className="relative max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -17,11 +20,11 @@ export default function Contacto() {
           transition={{ duration: 0.6 }}
           className="max-w-2xl"
         >
-          <p className="text-xs text-neutral-500 tracking-widest uppercase mb-4">Hablemos</p>
+          <p className="text-xs text-[#f5c800] tracking-widest uppercase mb-4 font-semibold">Hablemos</p>
           <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none mb-8">
             ¿Tenés una<br />consulta?
           </h2>
-          <p className="text-neutral-400 text-lg mb-12">
+          <p className="text-blue-200/70 text-lg mb-12">
             Escribinos por WhatsApp o seguinos en nuestras redes. Estamos en{" "}
             <span className="text-white">{CONFIG.direccion}, Carmelo.</span>
           </p>

@@ -6,7 +6,7 @@ import { CONFIG } from "@/lib/config"
 
 export default function Ubicacion() {
   return (
-    <section id="ubicacion" className="py-24 md:py-36 bg-neutral-50">
+    <section id="ubicacion" className="py-24 md:py-36 bg-amber-50">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,7 +15,7 @@ export default function Ubicacion() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <p className="text-xs text-neutral-400 tracking-widest uppercase mb-3">Dónde encontrarnos</p>
+          <p className="text-xs text-amber-600 tracking-widest uppercase mb-3 font-semibold">Dónde encontrarnos</p>
           <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900">
             Visitanos
           </h2>
@@ -31,8 +31,8 @@ export default function Ubicacion() {
             className="space-y-8"
           >
             <div className="flex gap-4">
-              <div className="mt-0.5 w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-4 h-4 text-neutral-600" />
+              <div className="mt-0.5 w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-4 h-4 text-amber-700" />
               </div>
               <div>
                 <p className="font-semibold text-neutral-900">{CONFIG.direccion}</p>
@@ -41,8 +41,8 @@ export default function Ubicacion() {
             </div>
 
             <div className="flex gap-4">
-              <div className="mt-0.5 w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0">
-                <Clock className="w-4 h-4 text-neutral-600" />
+              <div className="mt-0.5 w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                <Clock className="w-4 h-4 text-amber-700" />
               </div>
               <div className="space-y-2">
                 {CONFIG.horarios.map((h) => (

@@ -33,7 +33,7 @@ export default function Destacados() {
   }, [])
 
   return (
-    <section id="novedades" className="py-24 md:py-32 bg-white">
+    <section id="novedades" className="py-24 md:py-32 bg-blue-50">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -43,7 +43,7 @@ export default function Destacados() {
           className="flex items-end justify-between mb-12"
         >
           <div>
-            <p className="text-xs text-neutral-400 tracking-widest uppercase mb-2">Lo más nuevo</p>
+            <p className="text-xs text-[#1a4bc4] tracking-widest uppercase mb-2 font-semibold">Lo más nuevo</p>
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900">Novedades</h2>
           </div>
           <Link href="/catalogo" className="hidden sm:flex items-center gap-1.5 text-sm text-neutral-400 hover:text-neutral-900 transition-colors">

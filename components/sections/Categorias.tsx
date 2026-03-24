@@ -8,7 +8,7 @@ import categorias from "@/data/categorias.json"
 
 export default function Categorias() {
   return (
-    <section id="categorias" className="py-24 md:py-32 bg-neutral-50">
+    <section id="categorias" className="py-24 md:py-32 bg-amber-50">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -18,7 +18,7 @@ export default function Categorias() {
           className="flex items-end justify-between mb-12"
         >
           <div>
-            <p className="text-xs text-neutral-400 tracking-widest uppercase mb-2">Lo que tenemos</p>
+            <p className="text-xs text-amber-600 tracking-widest uppercase mb-2 font-semibold">Lo que tenemos</p>
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900">
               Categorías
             </h2>
