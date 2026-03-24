@@ -44,18 +44,14 @@ export default function Navbar() {
 
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 rounded-xl overflow-hidden bg-[#f5c800] flex items-center justify-center">
-              <Image
-                src="/images/logo.png"
-                alt="Mundo Manía"
-                fill
-                className="object-contain scale-90"
-              />
-            </div>
-            <span className={`font-black text-base tracking-tight transition-colors ${scrolled ? "text-neutral-900 group-hover:text-[#1a4bc4]" : "text-white group-hover:text-white/80"}`}>
-              Mundo Manía
-            </span>
+          <Link href="/" className="flex items-center group">
+            <Image
+              src="/images/logo.png"
+              alt="Mundo Manía"
+              width={110}
+              height={55}
+              className="object-contain h-10 w-auto transition-opacity group-hover:opacity-80"
+            />
           </Link>
 
           {/* Desktop nav */}
